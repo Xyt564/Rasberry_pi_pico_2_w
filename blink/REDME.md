@@ -1,6 +1,6 @@
 ## Raspberry Pi Pico W LED Example
 
-This is a simple project for the **Raspberry Pi Pico W** that demonstrates controlling the onboard LED using **C++**. I wrote this to practice C++ and get familiar with the Pico W’s WiFi chip and GPIO features.
+This is a simple project for the **Raspberry Pi Pico W** that demonstrates controlling the onboard LED using **C++**. I wrote this to practice C++ and get familiar with the Pico 2 W’s WiFi chip and GPIO features.
 
 ## What it Does
 
