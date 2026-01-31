@@ -10,11 +10,6 @@ This is where I post the `.uf2` files for all the C++ projects I make for my Pic
 * Projects are **for learning and fun**, not actively maintained
 * Each project shows basic functionality, like controlling the onboard LED
 
-## How to Get the Source Code
-
-I’m mostly sharing the compiled `.uf2` files here.
-If you want the **full C++ source code**, just submit a request and I’ll post it for you.
-
 ## Notes
 
 * Projects are mostly **learning experiments**
