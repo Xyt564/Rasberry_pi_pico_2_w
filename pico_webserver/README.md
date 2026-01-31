@@ -160,12 +160,6 @@ If you improve it — even better.
 
 ---
 
-Got you — this fits really nicely as a short **Security / Safety** section. I’ll keep it honest and technical (no cringe “unhackable” claims), but still clearly explain *why* this is low-risk.
-
-You can drop this straight into the README.
-
----
-
 ### 🔐 Security & Safety Notes
 
 This project is **inherently low-risk by design**, mainly because it runs on a **bare-metal microcontroller**, not a traditional computer.
