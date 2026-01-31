@@ -26,6 +26,32 @@ It is **not tested** and **not guaranteed to work** on:
 
 ---
 
+## Why This Is So Limited (Hardware Reality)
+
+This project runs on a **bare-metal microcontroller**, not a computer.
+
+The Pico 2 W has:
+
+* No operating system
+* Very limited RAM and flash compared to a PC
+* No filesystem
+* No real user input devices
+* No display
+* No background processes
+
+Because of this:
+
+* Tasks are stored in **fixed-size arrays**
+* There is **no dynamic allocation**
+* Nothing can be saved permanently
+* Input is blocking and linear
+* The program does exactly one thing at a time
+
+These limitations are **intentional** and reflect how embedded systems actually work.
+This isn’t bad design — it’s realistic design for the hardware.
+
+---
+
 ## Limitations (Important)
 
 Because this runs on a microcontroller with very limited resources:
@@ -34,33 +60,39 @@ Because this runs on a microcontroller with very limited resources:
 * Task names are limited to **14 characters**
 * Tasks are **not saved** (everything is lost on reboot)
 * No scrolling, no fancy UI, just serial text
-* Blocking input (this is intentional and simple)
+* Blocking input (intentional and simple)
 
-This is expected behavior — not a bug.
+This is expected behavior — **not a bug**.
 
 ---
 
 ## How to Use
 
-### 1. Install the uf2 file from repo.
-### hold the bootceel until the drive appears in the folder app.
-### then put the uf2 file in there then the drive should auto disappear and rebbot if succesful 
+### 1. Flash the UF2
 
-### 2. Open the serial terminal FIRST
+1. Hold the **BOOTSEL** button on the Pico 2 W
+2. Plug it into your computer
+3. Release BOOTSEL when the drive appears
+4. Copy the `.uf2` file from the repo onto the drive
+5. The drive will automatically disappear and reboot if successful
 
-Before plugging in the Pico 2 W, run this command:
+---
+
+### 2. Open the serial terminal **FIRST**
+
+Before plugging in (or rebooting) the Pico 2 W, run:
 
 ```bash
 screen /dev/ttyACM0 115200
 ```
 
-> This ensures the serial connection is ready when the Pico boots.
+This ensures the serial connection is ready when the Pico boots.
 
 ---
 
-### 2. Plug in the Pico 2 W
+### 3. Wait for startup
 
-After plugging it in:
+After plugging it in or rebooting:
 
 * Wait about **5 seconds**
 * You should see:
@@ -69,7 +101,11 @@ After plugging it in:
 READY
 ```
 
-If you don’t see anything, unplug it, close `screen`, and try again (to close screen do ctrl+A then press k then Y.
+If you don’t:
+
+* Unplug the Pico
+* Close `screen` (`Ctrl+A`, then `K`, then `Y`)
+* Try again
 
 ---
 
@@ -87,13 +123,13 @@ Once running, you’ll see:
 * **1 – List**
 
   * Shows all current tasks
-  * `[X]` means done
-  * `[ ]` means not done
+  * `[X]` = done
+  * `[ ]` = not done
 
 * **2 – Add**
 
-  * Adds a task (if space is available)
-  * Max 2 tasks total
+  * Adds a task if space is available
+  * Hard limit of 2 tasks
 
 * **3 – Done**
 
@@ -102,7 +138,7 @@ Once running, you’ll see:
 * **4 – Del**
 
   * Deletes a task
-  * Tasks shift up automatically if needed
+  * Task 2 shifts into slot 1 if needed
 
 ---
 
@@ -146,7 +182,7 @@ Other boards **may behave differently** or not work at all.
 
 ## Disclaimer
 
-This is a **toy project / learning project**, not a full task manager.
-If it breaks, locks up, or behaves weirdly — that’s kind of the point 😄
+This is a **toy / learning project**, not a real task manager.
+If it breaks, locks up, or behaves weirdly — that’s part of learning embedded systems 😄
 
 ---
