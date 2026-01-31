@@ -50,7 +50,7 @@ You can:
 * Replace links
 * Make it your own portfolio / info page
 
-### ❌ Don’t touch unless you know what you’re doing
+### ❌ Don’t touch the c++ code unless you know what you’re doing
 
 * TCP callbacks
 * lwIP logic
