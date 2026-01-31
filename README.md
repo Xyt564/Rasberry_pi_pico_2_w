@@ -31,6 +31,6 @@ Feel free to **explore, flash, and experiment**!
 
 # license
 
-feel free to use these projects and try them out for ur self
-If u want one custom made feel free to drop a request and I will try make it for you
-Enjoy
+* feel free to use these projects and try them out for ur self
+* If u want one custom made feel free to drop a request and I will try make it for you
+* Enjoy
