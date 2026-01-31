@@ -23,13 +23,13 @@ If you want the **full C++ source code**, just submit a request and I’ll post 
 
 Feel free to **explore, flash, and experiment**!
 
-## future
+# future
 
 * Soon I will also be posting some of my micro python files for the rasberry pi pico 2 w
 * For now i will be focusing on my c++ projects
 * My next project will be on how to host ur own webserver off the pico 2 w (ofc it will be limited)
 
-## license
+# license
 
 # feel free to use these projects and try them out for ur self
 # If u want one custom made feel free to drop a request and I will try make it for you
