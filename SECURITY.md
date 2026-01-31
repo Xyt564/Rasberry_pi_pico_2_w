@@ -2,7 +2,7 @@
 
 **Project Version:** 1.0
 
-Thank you for checking out my Raspberry Pi Pico W projects!
+Thank you for checking out my Raspberry Pi Pico 2 W projects!
 
 ## Reporting Issues or Requesting Code
 
