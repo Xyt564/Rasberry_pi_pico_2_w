@@ -63,6 +63,6 @@ int main() {
 
 ## License
 
-Feel free to use and modify this for learning purposes.
+Feel free to use and theres not really much to modify for this. if you would like the full code just put a request in and I will add it in.
 
 ---
