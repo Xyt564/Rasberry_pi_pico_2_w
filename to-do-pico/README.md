@@ -42,8 +42,8 @@ This is expected behavior — not a bug.
 
 ## How to Use
 
-### 1. Install the uf2 file in the folder
-### hold the bootceel until the drive appears
+### 1. Install the uf2 file from repo.
+### hold the bootceel until the drive appears in the folder app.
 ### then put the uf2 file in there then the drive should auto disappear and rebbot if succesful 
 
 ### 2. Open the serial terminal FIRST
