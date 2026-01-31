@@ -84,8 +84,8 @@ The Raspberry Pi Pico 2 W is a **bare-metal microcontroller**, not a full comput
 - **No Operating System**
   - Runs without Linux, Windows, or any multitasking OS  
   - No process isolation or user accounts  
-  - No shell, no background services, no package manager  
-  - Security surface for attacks is extremely small — but it also means multitasking and complex frameworks aren’t possible
+  - No shell, background services, or package manager  
+  - Security surface is extremely small — but it also means multitasking and complex frameworks aren’t possible
 
 - **Networking Constraints**
   - Built-in WiFi (CYW43) but only basic TCP/UDP stacks  
@@ -98,17 +98,17 @@ The Raspberry Pi Pico 2 W is a **bare-metal microcontroller**, not a full comput
   - Dynamic content, large media, or logging is impractical
 
 - **I/O & Peripherals**
-  - Limited GPIO pins for input/output (I do not have a breadboard either)
+  - Limited GPIO pins for input/output (I don’t have a breadboard either)  
   - Peripheral interfaces are low-level and must be managed manually  
 
 **Implications for Your Projects:**
 
-- Projects are **intentionally simple** to ensure they run reliably
+- Projects are **intentionally simple** to run reliably
 - Features like JavaScript, dynamic file handling, or large datasets are avoided  
 - Static HTML, minimal C++ logic, and external helpers (like Cloudflare tunnels) are **practical workarounds**  
-- Any attempt to make a “full server” or heavy web app would likely fail to run on the pico 2 w and crash it
+- Any attempt to make a “full server” or heavy web app would likely crash the Pico 2 W
 
-By understanding these constraints, you can design projects that are **stable, predictable, and flashable**, while still being educational and fun.
+Understanding these constraints helps you design projects that are **stable, predictable, and flashable**, while still being educational and fun.
 
 ---
 
