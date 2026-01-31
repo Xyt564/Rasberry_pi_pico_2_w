@@ -150,13 +150,3 @@ This is a **toy project / learning project**, not a full task manager.
 If it breaks, locks up, or behaves weirdly — that’s kind of the point 😄
 
 ---
-
-If you want, I can:
-
-* Make it support **longer task names**
-* Add **non-blocking input**
-* Add **timestamps**
-* Rewrite it using a **state machine**
-* Or help you clean the code up for GitHub
-
-Just say the word.
