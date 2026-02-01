@@ -2,26 +2,26 @@
 
 A **terminal-based ASCII clock** for the **Raspberry Pi Pico 2 W**, written in C++.
 
-It syncs time over **WiFi using NTP**, displays it as large ASCII digits over **USB serial or UART**, and **falls back to manual time** if WiFi/NTP isn’t available.
+The clock retrieves time over **WiFi using NTP**, displays it as large ASCII digits over **USB serial or UART**, and provides a **manual fallback** if WiFi/NTP is unavailable.
 
-This project is intentionally simple, reliable, and very embedded-friendly — no dynamic memory abuse, no fancy UI libraries, just solid firmware.
+This project is designed to be simple, reliable, and fully embedded-friendly — no dynamic memory abuse or unnecessary UI libraries, just solid firmware.
 
 ---
 
 ## ✨ Features
 
-* 📡 **WiFi + NTP time sync** (pool.ntp.org)
+* 📡 **WiFi + NTP time synchronization** (pool.ntp.org)
 * 🕒 **Manual time fallback** if WiFi fails
 * 🖥️ **Centered ASCII clock** (assumes 80‑column terminal)
-* 💡 **Onboard LED feedback**
+* 💡 **Onboard LED status indicators**
 
-  * Slow blink → connecting to WiFi
+  * Slow blink → Connecting to WiFi
   * Fast blink → WiFi connected
 * 🔌 **Two build modes**:
 
   * USB CDC serial (default)
   * Hardware UART (GPIO 0 / GPIO 1)
-* 🧱 Designed specifically for **Pico 2 W**
+* 🧱 Specifically designed for the **Pico 2 W**
 
 ---
 
@@ -30,7 +30,7 @@ This project is intentionally simple, reliable, and very embedded-friendly — n
 ```
 ascii_clock/
 ├── ascii_clock.cpp        # Main source code
-├── CMakeLists.txt         # Pico SDK CMake config
+├── CMakeLists.txt         # Pico SDK CMake configuration
 ├── build.sh               # Interactive build script
 ├── lwipopts.h             # Required lwIP configuration
 ├── pico_sdk_import.cmake  # Pico SDK import helper
@@ -41,15 +41,15 @@ ascii_clock/
 
 ## 🔧 Requirements
 
-Before building, you need:
+Before building, ensure you have:
 
 * **Raspberry Pi Pico SDK** installed
 * A **Pico 2 W** board
 * CMake, Make, and a working ARM toolchain
 
-### Pico SDK
+### Installing Pico SDK
 
-Clone the SDK somewhere sensible:
+Clone the SDK and initialize submodules:
 
 ```bash
 git clone https://github.com/raspberrypi/pico-sdk.git
@@ -57,7 +57,7 @@ cd pico-sdk
 git submodule update --init
 ```
 
-Then export the SDK path:
+Export the SDK path:
 
 ```bash
 export PICO_SDK_PATH=~/pico-sdk
@@ -69,16 +69,30 @@ export PICO_SDK_PATH=~/pico-sdk
 
 ## 🛠️ Building
 
-An interactive build script is provided.
+An interactive build script is provided for convenience.
 
-### Run the build (Make sure you add your WiFi credentials in the source before building.)
+### Steps:
+
+1. Open `ascii_clock.cpp` and add your WiFi credentials:
+
+```cpp
+#define WIFI_SSID     "YOUR_WIFI_SSID"
+#define WIFI_PASSWORD "YOUR_WIFI_PASSWORD"
+```
+
+2. Make the build script executable:
 
 ```bash
 chmod +x build.sh
+```
+
+3. Run the build script:
+
+```bash
 ./build.sh
 ```
 
-You’ll be asked which version to build:
+4. Select the build version:
 
 ```
 1) USB Serial version (default / recommended)
@@ -87,7 +101,7 @@ You’ll be asked which version to build:
 
 The script will:
 
-* Clean old builds (Remove the hastag before the rm -rf build if u have previous build attempts)
+* Remove previous build output (remove the `#` before `rm -rf build` if needed)
 * Configure CMake
 * Compile the firmware
 * Generate `ascii_clock.uf2`
@@ -96,10 +110,9 @@ The script will:
 
 ## 🚀 Flashing to the Pico
 
-1. Hold **BOOTSEL** on the Pico
-2. Plug it into USB
-3. Release BOOTSEL
-4. Copy the UF2 file:
+1. Hold **BOOTSEL** on the Pico while plugging it into USB
+2. Release **BOOTSEL**
+3. Copy the UF2 file to the Pico:
 
 ```bash
 cp build/ascii_clock.uf2 /media/$USER/RPI-RP2/
@@ -111,29 +124,28 @@ The Pico will reboot automatically.
 
 ## 🖥️ Viewing Output
 
-### USB Serial (default / recommended build)
+### USB Serial (default build)
 
 * **Linux**:
 
-  ```bash
-  screen /dev/ttyACM0 115200
-  ```
+```bash
+screen /dev/ttyACM0 115200
+```
+
 * **macOS**:
 
-  ```bash
-  screen /dev/tty.usbmodem* 115200
-  ```
-* **Windows**:
+```bash
+screen /dev/tty.usbmodem* 115200
+```
 
-  * Use PuTTY
-  * Select the COM port
-  * Baud rate: **115200**
+* **Windows**:
+  Use PuTTY, select the correct COM port, baud rate **115200**.
 
 ---
 
 ### UART Version
 
-If you build the UART version, wire as follows:
+If using UART mode, wire as follows:
 
 | Pico GPIO | Connect To           |
 | --------- | -------------------- |
@@ -145,36 +157,21 @@ If you build the UART version, wire as follows:
 
 ---
 
-## 📡 WiFi Configuration
-
-Edit these lines in `ascii_clock.cpp`:
-
-```cpp
-#define WIFI_SSID     "YOUR_WIFI_SSID"
-#define WIFI_PASSWORD "YOUR_WIFI_PASSWORD"
-```
-
-build only after changing credentials.
-
----
-
 ## 💡 LED Status Indicators
 
-The onboard LED provides instant feedback:
+The onboard LED provides status feedback:
 
 * ⏳ **Slow blink** → Connecting to WiFi
 * ✅ **Fast blink** → WiFi connected successfully
 * ❌ **Long blinks** → WiFi or NTP failure
 
-This is useful even if no serial terminal is open.
+LED feedback is active even without a serial terminal connected.
 
 ---
 
 ## ⏰ Manual Time Fallback
 
-If WiFi or NTP fails, the clock uses a hardcoded fallback time.
-
-You can edit it here:
+If WiFi or NTP is unavailable, the clock will use a hardcoded fallback time:
 
 ```cpp
 init_time(2026, 2, 1, 6, 10, 48, 0);
@@ -186,7 +183,7 @@ Format:
 init_time(Year, Month, Day, DayOfWeek, Hour, Minute, Second)
 ```
 
-DayOfWeek:
+DayOfWeek mapping:
 
 ```
 0 = Sunday
@@ -216,18 +213,24 @@ DayOfWeek:
 
 ## 🧠 Design Notes
 
-* Uses lwIP directly (no SNTP helper)
-* No heap-heavy abstractions
-* `goto` is used intentionally for clean error fallback
-* Assumes an 80‑column terminal (standard for serial)
+* Uses lwIP directly (without SNTP helper)
+* Avoids heap-heavy abstractions for reliability
+* `goto` is used intentionally for clean error handling
+* Assumes an 80‑column terminal (standard for serial output)
 
-> That’s not a bug — that’s embedded development.
+> That’s not a bug — it’s how embedded development works.
 
 ---
 
 ## 📜 License
 
-Use it, fork it, break it, improve it.
-If you find bugs or want features, open an issue.
+This project is open for personal or educational use. You may:
 
-Have fun 👾
+* Use it
+* Fork it
+* Modify it
+* Report issues or request features
+
+Have fun and explore embedded development! 👾
+
+---
