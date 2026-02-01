@@ -33,8 +33,7 @@ The Pico **2 W** uses updated WiFi hardware and SDK support that this project re
 ## 📄 Customising the Website
 
 You are **expected** to edit the HTML.
-
-You are **not** expected to rewrite the C/C++.
+You are **not** expected to rewrite the networking code.
 
 ### ✔ Safe to edit
 
@@ -48,63 +47,125 @@ You can:
 * Change styles
 * Add/remove sections
 * Replace links
-* Make it your own portfolio / info page
+* Make it your own portfolio or info page
 
-### ❌ Don’t touch the c++ code unless you know what you’re doing
+### ❌ Avoid editing unless you know what you’re doing
 
 * TCP callbacks
 * lwIP logic
 * WiFi setup
 * Memory handling
 
-Keeping the C/C++ logic the same ensures stability on the Pico 2 W.
+---
+
+## ❌ Why There Is No Precompiled UF2
+
+A precompiled `.uf2` is **not provided by design**.
+
+WiFi credentials and SDK configuration are required **at build time**.
+A prebuilt firmware would not connect to your network and would likely fail to run.
+
+This project must be **built locally**.
 
 ---
 
-## 🌐 Exposing It to the Internet (Free)
+## 📂 Repository Contents
 
-This server is designed for **local networks**, but you can expose it **publicly for free** using **Cloudflare Tunnel (cloudflared)**.
-
-### How it works (high level)
-
-1. Pico 2 W runs the web server on your LAN
-2. A separate machine (PC / server / laptop) runs `cloudflared`
-3. Cloudflare creates a secure tunnel to your Pico
-4. You get a public HTTPS URL — **no port forwarding**
-
-This is:
-
-* Free
-* Secure
-* Fast to set up
-* No router config required
-
-> The Pico itself does **not** run cloudflared — it just serves HTTP.
+```
+.
+├── CMakeLists.txt
+├── pico_sdk_import.cmake
+├── lwipopts.h
+├── pico_webserver.cpp
+├── check.sh
+├── build.sh
+└── README.md
+```
 
 ---
 
-## 🔧 How It Works (Under the Hood)
+## 🛠 Build Instructions (IMPORTANT)
 
-1. Pico 2 W connects to WiFi using the CYW43 driver
-2. A TCP server is opened on port **80**
-3. When a client connects:
+### ⚠️ Read This First
 
-   * The request is checked for `GET`
-   * A minimal HTTP response is constructed
-   * HTML is sent directly from memory
-4. Connection is closed cleanly after sending
+**You MUST run `check.sh` before building.**
 
-No threading, no async framework — just **raw TCP callbacks**.
+Even as the project author, this script was required to ensure everything was set up correctly.
+If required dependencies are missing, the project **will not build**.
 
 ---
 
-## 📦 Tech Stack
+### 🔍 Step 1: Run `check.sh`
 
-* Raspberry Pi Pico SDK
-* CYW43 WiFi stack
-* lwIP TCP/IP stack
-* C / C++
-* Bare-metal embedded networking
+This script verifies:
+
+* Pico SDK is installed
+* Required SDK submodules are present
+* Toolchain availability
+* Environment variables are set correctly
+
+Run:
+
+```bash
+chmod +x check.sh
+./check.sh
+```
+
+* If the check **passes**, you can continue
+* If anything is missing, the script will **tell you exactly what to fix**
+
+Do **not** skip this step.
+
+---
+
+### 🌐 Step 2: Configure WiFi
+
+Edit the source file and set your WiFi credentials **before building**:
+
+```c
+const char WIFI_SSID[] = "YOUR_SSID";
+const char WIFI_PASSWORD[] = "YOUR_PASSWORD";
+```
+
+---
+
+### ▶️ Step 3: Build with `build.sh`
+
+Once `check.sh` reports everything is OK:
+
+```bash
+chmod +x build.sh
+./build.sh
+```
+
+This will:
+
+* Create a `build/` directory
+* Configure the project with CMake
+* Compile the firmware
+* Generate a `.uf2` file in `build/`
+
+---
+
+## 📦 Flashing the Pico
+
+1. Hold the **BOOTSEL** button on the Pico 2 W
+2. Plug it into your computer via USB
+3. Release BOOTSEL when it appears as a USB drive
+4. Copy the generated `.uf2` file from the `build/` directory onto the Pico
+5. The Pico will reboot automatically
+
+---
+
+## 🌐 Accessing the Server
+
+Then Open a serial terminal to view logs.
+
+Once connected, the Pico will print its IP address:
+
+```
+http://<pico-ip-address>/
+```
 
 ---
 
@@ -116,131 +177,61 @@ This server is intentionally:
 * Static
 * Limited
 
-That’s not a flaw — it’s **necessary**.
-
 The Pico 2 W has:
 
 * Limited RAM
-* No MMU
+* Only **2 CPU cores**
+* No OS
 * No filesystem
-* No process isolation
 
-If this were more complex, it **wouldn’t run reliably**.
-
-So the design is:
-
-> *“Do one thing, do it well, and don’t waste memory.”*
+More complexity = less reliability.
 
 ---
 
-## 🚀 Use Cases
-
-* Embedded status page
-* Device info page
-* Mini portfolio
-* Internal tools
-* Learning lwIP + embedded networking
-* Quick demo servers
-
----
-
-## 📝 Notes
+## 📝 Notes & Limitations
 
 * Default port: **80**
 * WPA2 WiFi only
-* One client at a time (by design)
-* Not intended for production workloads
+* One client at a time (by design but for me it did manage to run on my 3 phones at the same time)
+* No HTTPS
+* Not intended for production use
+
+---
+
+## 🛠 Maintenance
+
+This project is provided **as-is**.
+
+* No active maintenance
+* No guaranteed updates
+* Fixes can be attempted on request
+
+---
+
+## 🔐 Security Notes
+
+* Bare-metal microcontroller
+* No OS or shell
+* Static responses only
+* No user input handling
+
+A crash just resets the device.
 
 ---
 
 ## 📜 License
 
 Use it, modify it, break it, learn from it.
-If you improve it — even better.
 
 ---
 
-### 🔐 Security & Safety Notes
+### ✅ TL;DR
 
-This project is **inherently low-risk by design**, mainly because it runs on a **bare-metal microcontroller**, not a traditional computer.
-
-### 🧠 No Operating System
-
-* The Pico 2 W runs **without an OS**
-* No users, no processes, no shell
-* No package manager, services, or background daemons
-* Nothing to “log into” or escalate privileges on
-
-There is simply **no attack surface** like you’d find on Linux or Windows.
-
----
-
-### 📦 Static, Read-Only Behaviour
-
-* Serves a **single static HTML page**
-* No file uploads
-* No form handling
-* No dynamic execution
-* No filesystem
-
-Requests are handled in memory and discarded immediately.
-
----
-
-### 🌍 Local Network by Default
-
-By default, the server:
-
-* Is only accessible on your **local network**
-* Is not publicly exposed
-* Requires no port forwarding
-
-This alone already makes it very hard to interact with from outside.
-
----
-
-### ☁️ Cloudflare Tunnel Protection (Optional)
-
-If you expose it using **Cloudflare Tunnel (cloudflared)**:
-
-* The Pico is **never directly exposed** to the internet
-* Cloudflare sits in front of it as a reverse proxy
-* You get:
-
-  * HTTPS
-  * DDoS protection
-  * Rate limiting
-  * Bot filtering
-
-The microcontroller only ever sees traffic from Cloudflare.
-
----
-
-### 🔒 Realistic Threat Model
-
-Could it theoretically have bugs? Yes — like any C++ code.
-
-But in practice:
-
-* There’s no OS to compromise
-* No persistence mechanism
-* No remote code execution path
-* A crash just resets the device
-
-Worst case: the server stops responding and you reboot it.
-
----
-
-### ✅ Summary
-
-This setup is safe because:
-
-* Bare-metal microcontroller
-* No OS
-* No user input handling
-* Local-only by default
-* Cloudflare protection when exposed
-
-It’s about as low-risk as a networked device can realistically be.
-
----
+```text
+1. Run check.sh
+2. Fix anything it complains about
+3. Set WiFi credentials
+4. Run build.sh
+5. Flash UF2
+6. Done
+```
