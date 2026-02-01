@@ -71,7 +71,7 @@ export PICO_SDK_PATH=~/pico-sdk
 
 An interactive build script is provided.
 
-### Run the build (make sure u add ur wifi creds in the code before building)
+### Run the build (Make sure you add your WiFi credentials in the source before building.)
 
 ```bash
 chmod +x build.sh
@@ -87,7 +87,7 @@ You’ll be asked which version to build:
 
 The script will:
 
-* Clean old builds
+* Clean old builds (Remove the hastag before the rm -rf build if u have previous build attempts)
 * Configure CMake
 * Compile the firmware
 * Generate `ascii_clock.uf2`
