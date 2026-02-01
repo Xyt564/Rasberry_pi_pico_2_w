@@ -16,7 +16,7 @@ const char WIFI_PASSWORD[] = "YOUR_PASSWORD";
 #define HTTP_GET "GET"
 #define HTTP_RESPONSE_HEADERS "HTTP/1.1 %d OK\nContent-Length: %d\nContent-Type: text/html; charset=utf-8\nConnection: close\n\n"
 
-// Minimal HTML page
+// Minimal HTML page (u can edit from here. if u dont know how to just look for the words and change them or use Ai)
 const char *html_content = 
     "<!DOCTYPE html>"
     "<html><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1'>"
