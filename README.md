@@ -1,119 +1,190 @@
-## Raspberry Pi Pico 2 W Projects
+# 🟢 Raspberry Pi Pico 2 W Projects
 
 Welcome to my collection of **Raspberry Pi Pico 2 W projects**.
 
-This repository is where I store and share the C++ projects I build for my Pico 2 W.  
-Think of it as a mix of personal storage and a small sharing hub for anyone interested in experimenting with embedded projects.
+This repository is where I store and share the C++ projects I build for my Pico 2 W.
+It’s a mix of **personal storage**, **experiments**, and **shareable examples** for anyone interested in embedded development on constrained hardware.
 
 ---
 
-## 📦 Source Code Included
+## 📦 Source Code Always Included
 
-All projects in this repository include their **full C++ source code**.
+All projects in this repository include their **full C/C++ source code**.
 
-Each project folder (for example `pico_webserver/`) contains:
-- Complete C/C++ source files
-- A precompiled `.uf2` file for quick flashing
-- Comments explaining what each part of the code does
-- Notes or instructions on building and modifying the project (where applicable)
+Every project folder contains:
+
+* Complete C/C++ source files
+* Build files (`CMakeLists.txt`, scripts, config headers, etc.)
+* Comments explaining how things work
+* Project-specific instructions in that folder’s `README.md`
 
 This makes it easy to:
-- Clone the repository
-- Flash the precompiled `.uf2` files
-- Build the projects yourself if you want
-- Customize the code (for example, editing the web server’s HTML)
-- Learn how everything works from top to bottom
+
+* Clone the repository
+* Read and learn from the code
+* Build projects yourself
+* Modify behaviour (HTML, logic, scan ranges, etc.)
+* Understand how Pico 2 W projects work end-to-end
 
 ---
 
-## ⚡ How to Flash a `.uf2` File
+## ⚠️ Important: Precompiled `.uf2` Files Are Project-Dependent
 
-To get a project running on your **Raspberry Pi Pico 2 W**:
+**Not all projects include a precompiled `.uf2` file.**
 
-1. **Enter bootloader mode:**  
-   Hold down the **BOOTSEL** button on your Pico 2 W.
-2. **Connect to your computer:**  
-   While holding **BOOTSEL**, plug the Pico into a USB port.
-3. **Copy the `.uf2` file:**  
-   Your Pico will appear as a removable drive.  
-   Drag and drop or copy/paste the `.uf2` file into this drive.
-4. **Auto-flash:**  
-   The Pico will automatically reboot and run the project once the file is copied.
+This is **intentional**.
 
-That’s it! No extra software needed — just plug, copy, and go. 🚀
+### Why Some Projects Have No UF2
+
+Projects that use **WiFi or networking** (for example: web servers or scanners) require:
+
+* WiFi SSID & password
+* Network-specific configuration
+* SDK features that must be set at build time
+
+A precompiled `.uf2` would:
+
+* **Not connect to your WiFi**
+* Often fail silently
+* Cause confusion
+
+For these projects, you **must build the firmware yourself** after editing the source.
+
+Each project’s README clearly states whether:
+
+* A `.uf2` is provided
+* Or the project is **source-only by design**
+
+---
+
+## ⚡ Flashing a `.uf2` (When Provided)
+
+If a project **does include a UF2**, flashing is easy:
+
+1. Hold the **BOOTSEL** button on your Pico 2 W
+2. Plug it into your computer via USB
+3. Release BOOTSEL when it appears as a USB drive
+4. Copy the `.uf2` file onto the Pico
+5. The Pico will reboot and run the project automatically
+
+No extra tools required.
+
+---
+
+## 🛠 Building Projects From Source (Common for WiFi Projects)
+
+Many projects include:
+
+* `check.sh` – verifies your environment and dependencies
+* `build.sh` – builds the firmware and generates a `.uf2`
+
+Typical workflow:
+
+```text
+1. Run check.sh
+2. Fix anything it reports missing
+3. Edit source (WiFi credentials, config, etc.)
+4. Run build.sh
+5. Flash the generated UF2
+```
+
+**Always read the project’s README first.**
+It will tell you exactly what is required.
 
 ---
 
 ## 🔍 What You’ll Find Here
 
-- Ready-to-flash `.uf2` files for **Raspberry Pi Pico 2 W**
-- Full source code for every project
-- Projects made mainly for **learning and experimentation**
-- Simple demos and practical examples (LED control, networking, etc.)
-
----
-
-## 📝 Notes
-
-- These projects are mostly **learning experiments**
-- Written in **C++ using the Pico SDK**
-- Some projects are intentionally minimal or just for fun
-
-Feel free to **explore, flash, and experiment** 🚀
-
----
-
-## 🔮 Future Plans
-
-- I’ll be adding some **MicroPython projects** for the Pico 2 W later on
-- For now, the focus is on **C++ / Pico SDK projects**
-- Next planned project: a **Pico 2 W serial clock** (with realistic limitations)
+* Embedded C++ projects for **Raspberry Pi Pico 2 W**
+* Networking demos (web servers, scanners)
+* Simple utilities and experiments
+* Learning-focused code
+* Realistic designs that respect hardware limits
 
 ---
 
 ## ⚙️ Hardware Limitations & Realistic Expectations
 
-The Raspberry Pi Pico 2 W is a **bare-metal microcontroller**, not a full computer. It has significant hardware limitations that define what projects can realistically do:
+The Raspberry Pi Pico 2 W is a **bare-metal microcontroller**, not a full computer.
 
-- **CPU & Memory**
-  - Dual-core ARM Cortex-M0+ at 133 MHz  
-  - Only **264 KB of RAM** and **2 MB of flash storage**  
-  - No memory protection, no virtual memory  
-  - Limits the complexity of programs, dynamic data, and large files
+### Core Constraints
 
-- **No Operating System**
-  - Runs without Linux, Windows, or any multitasking OS  
-  - No process isolation or user accounts  
-  - No shell, background services, or package manager  
-  - Security surface is extremely small — but it also means multitasking and complex frameworks aren’t possible
+* **CPU & Memory**
 
-- **Networking Constraints**
-  - Built-in WiFi (CYW43) but only basic TCP/UDP stacks  
-  - No HTTPS natively; complex web features require external handling (e.g., Cloudflare tunnels)  
-  - Only one active TCP connection is recommended for stability in simple servers
+  * Dual-core ARM Cortex-M0+ @ 133 MHz
+  * **264 KB RAM**, **2 MB flash**
+  * No virtual memory or protection
 
-- **Storage Limitations**
-  - No filesystem or SD card by default  
-  - All code, HTML, and data must fit in flash memory  
-  - Dynamic content, large media, or logging is impractical
+* **No Operating System**
 
-- **I/O & Peripherals**
-  - Limited GPIO pins for input/output (I don’t have a breadboard either)  
-  - Peripheral interfaces are low-level and must be managed manually  
+  * No Linux / Windows
+  * No processes or users
+  * No shell or background services
 
-**Implications for Your Projects:**
+* **Networking Limits**
 
-- Projects are **intentionally simple** to run reliably
-- Features like JavaScript, dynamic file handling, or large datasets are avoided  
-- Static HTML, minimal C++ logic, and external helpers (like Cloudflare tunnels) are **practical workarounds**  
-- Any attempt to make a “full server” or heavy web app would likely crash the Pico 2 W
+  * Basic TCP/UDP only
+  * No HTTPS natively
+  * One active connection recommended for stability
 
-Understanding these constraints helps you design projects that are **stable, predictable, and flashable**, while still being educational and fun.
+* **Storage**
+
+  * No filesystem by default
+  * All assets must fit in flash memory
+
+### What This Means
+
+* Projects are **intentionally simple**
+* Static HTML over dynamic web apps
+* Minimal logic over heavy frameworks
+* Reliability over features
+
+Trying to turn the Pico 2 W into a “real server” will usually end in crashes or instability.
+
+---
+
+## 🧠 Project Philosophy
+
+These projects are built with one goal:
+
+> **Do things that make sense on a microcontroller.**
+
+That means:
+
+* Small, focused programs
+* Clear tradeoffs
+* No unnecessary abstraction
+* Code you can actually understand
+
+---
+
+## 🔮 Future Plans
+
+* More Pico 2 W C++ projects
+* MicroPython experiments later
+* Practical tools with realistic limits
+* Learning-first approach over polish
 
 ---
 
 ## 📜 License
 
-- Feel free to use, modify, and learn from these projects
-- If you want something custom-built, open a request and I’ll try to help
-- Enjoy!
+* Free to use, modify, and learn from
+* If you want something custom, open an issue or request
+* No guarantees, but I’ll try to help when I can
+
+---
+
+### ✅ Final Note
+
+If a project:
+
+* Uses WiFi
+* Touches networking
+* Needs credentials
+
+**Expect to build it yourself.**
+
+That’s not a bug — it’s how embedded development works.
+
+---
