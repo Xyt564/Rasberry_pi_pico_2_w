@@ -225,3 +225,9 @@ If someone says “this is impressive for a microcontroller” — they’re als
 Both can be true.
 
 ---
+
+## Quote for the goats Energy
+
+> “Four hours, a dream and a Pico 2 W then came a full OS running. Stable, stress-tested, untouchable. Limits exist? Cute. I went anyway.”
+
+---
