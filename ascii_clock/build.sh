@@ -27,7 +27,7 @@ echo "2) UART Serial version (GPIO 0/1)"
 read -p "Enter choice [1-2]: " choice
 
 # Create and enter build directory
-rm -rf build
+# rm -rf build (u can remove the hastage if u want)
 mkdir -p build
 cd build
 
