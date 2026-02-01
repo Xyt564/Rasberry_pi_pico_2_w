@@ -229,6 +229,7 @@ Both can be true.
 ## Quote for the goats Energy
 
 > “Four hours, a dream and a Pico 2 W then came a full OS running. Stable, stress-tested, untouchable. Limits exist? Cute. I went anyway.”
+
 > “They said it was impossible. I said, hold my Pico — OS incoming.”
 
 ---
