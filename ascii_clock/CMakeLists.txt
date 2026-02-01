@@ -24,7 +24,7 @@ add_executable(ascii_clock
     ascii_clock.cpp
 )
 
-# 🔑 THIS IS THE FIX
+# make it look in the active directory for cmake and other files in the folder
 target_include_directories(ascii_clock PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}
 )
