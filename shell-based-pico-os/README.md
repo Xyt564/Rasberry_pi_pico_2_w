@@ -242,6 +242,17 @@ This project exists because:
 
 Turns out it can — if you’re stubborn enough.
 
+Looking back, it’s a bit absurd.
+
+Most people would’ve taken painkillers and called it a day.
+Instead, I sat there with post-braces discomfort and somehow ended up building something that many experienced developers will confidently tell you is *“not possible”* on this hardware.
+
+Not because it was easy.
+Not because the Pico suddenly got more RAM.
+But because I kept going anyway.
+
+That’s kind of the whole theme of this project.
+
 ---
 
 ## 🧠 Why It Matters
