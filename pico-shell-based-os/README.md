@@ -128,7 +128,7 @@ My teeth felt weird. Distractingly weird.
 
 So instead of painkillers, I decided to focus.
 
-Six hours later, this exists:
+Nine hours later, this exists:
 
 * A shell-based OS
 * Multicore scheduling
