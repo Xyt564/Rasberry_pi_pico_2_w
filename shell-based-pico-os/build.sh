@@ -71,12 +71,12 @@ if [ -f "pico_os.uf2" ]; then
     echo -e "==================================${NC}"
     echo -e "${GREEN}Output file: build/pico_os.uf2${NC}"
     echo ""
+    echo "Before Anything do sudo apt install screen or sudo apt install minicom which ever you wish to use"
     echo "To flash your Pico 2 W:"
     echo "1. Hold down BOOTSEL button while connecting USB"
     echo "2. Copy build/pico_os.uf2 to the RP2350 drive"
     echo "3. Connect via serial: screen /dev/ttyACM0 115200"
     echo "   or: minicom -D /dev/ttyACM0 -b 115200"
-    echo "use command sudo apt install screen or sudo apt install minicom to get these packages"
 else
     echo -e "${RED}Build failed! Check errors above.${NC}"
     exit 1
